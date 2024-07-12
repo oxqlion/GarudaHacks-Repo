@@ -12,6 +12,7 @@ import TeacherDashboard from "./pages/TeacherDashboard";
 import DetailCourse from "./DetailCourseView";
 import CreateCourse from "./pages/CreateCourse";
 import CourseDetail from "./pages/CourseDetail";
+import AboutView from "./AboutView";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/detail-course" element={<DetailCourse />} />
         <Route path="/create-course" element={<CreateCourse />} />
         <Route path="/course/:courseId" element={<CourseDetail />} />
+        <Route path="/about" element={<AboutView />} />
       </Routes>
     </Router>
   );
