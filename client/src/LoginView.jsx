@@ -20,8 +20,8 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className='h-screen w-screen'>
+      <h2 className='font-bold text-2xl w-full text-center font-inter '>Login</h2>
       <form onSubmit={handleLogin}>
         <div>
           <label>Email:</label>
