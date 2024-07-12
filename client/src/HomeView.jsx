@@ -1,4 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "./firebaseConfig";
+
 import Navbar from "./components/Navbar";
 import Searchbar from "./components/Searchbar";
 import CourseCard from "./components/CourseCard";
@@ -8,8 +11,25 @@ import Footer from "./components/Footer";
 import { FaStar } from "react-icons/fa";
 import "./index.css";
 import CourseCardBig from "./components/CourseCardBig";
+import { Link } from "react-router-dom";
 
 const Home = () => {
+
+  const [allCourse, setAllCourse] = useState([]);
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const q = query(collection(db, "courses"));
+      const querySnapshot = await getDocs(q);
+      const coursesData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setAllCourse(coursesData);
+    };
+
+    fetchCourses();
+  }, []);
+
   const courses = [
     {
       title: "American Sign Language (ASL) Basics",
@@ -126,6 +146,19 @@ const Home = () => {
           ref={carouselRef}
           className="px-6 overflow-x-auto flex space-x-4 pb-4 scroll-smooth"
         >
+          {allCourse.map((course, index) => (
+            <Link
+              key={index}
+              to={`/course/${course.id}`}
+            >
+              <CourseCard
+                title={course.courseName}
+                description={course.courseDescription}
+                image={course.thumbnail}
+              />
+            </Link>
+          ))}
+
           {courses.map((course, index) => (
             <CourseCard
               key={index}
@@ -154,6 +187,19 @@ const Home = () => {
           ref={carouselRef2}
           className="px-6 overflow-x-auto flex space-x-4 pb-4 scroll-smooth"
         >
+          {allCourse.map((course, index) => (
+            <Link
+              key={index}
+              to={`/course/${course.id}`}
+            >
+              <CourseCard
+                title={course.courseName}
+                description={course.courseDescription}
+                image={course.thumbnail}
+              />
+            </Link>
+          ))}
+
           {courses.map((course, index) => (
             <CourseCard
               key={index}
