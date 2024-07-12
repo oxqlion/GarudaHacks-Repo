@@ -47,8 +47,9 @@ const Login = () => {
   };
 
   return (
-    <div className="flex h-screen w-screen items-center justify-center">
-      <div>
+    <div className="flex h-screen w-screen items-center justify-center lg:grid lg:grid-cols-2">
+      <div className="max-lg:hidden w-full h-full bg-primary"></div>
+      <div className="lg:px-40">
         <h2 className="font-bold text-2xl w-full text-center font-inter ">
           Login
         </h2>
@@ -94,7 +95,10 @@ const Login = () => {
             <p className="text-red-500 py-2 w-full text-center">{error}</p>
           )}
           <p className="py-3 w-full text-center font-semibold text-sm">
-            don't have an account? <a classname="text-blue-500">register </a>{" "}
+            don't have an account?
+            <a href="/register" style={{ color: "#3b82f6" }}>
+              register
+            </a>
             here
           </p>
         </div>

@@ -26,8 +26,9 @@ const Register = () => {
   };
 
   return (
-    <div className="flex w-screen h-screen items-center justify-center">
-      <div>
+    <div className="flex h-screen w-screen items-center justify-center lg:grid lg:grid-cols-2">
+      <div className="max-lg:hidden w-full h-full bg-primary"></div>
+      <div className="lg:px-40">
         <h2 className="font-bold text-2xl w-full text-center font-inter ">
           Register
         </h2>
@@ -68,20 +69,30 @@ const Register = () => {
           />
         </div>
 
-          <div className="flex flex-row mb-2">
-            <input type="checkbox" id="agree" name="agree" />
-            <p className="text-sm font-inter px-2">
-              I agree to the terms & services
-            </p>
-          </div>
+        <div className="flex flex-row mb-2">
+          <input type="checkbox" id="agree" name="agree" />
+          <p className="text-sm font-inter px-2">
+            I agree to the terms & services
+          </p>
+        </div>
         <button
           onClick={handleRegister}
-          className="w-full rounded-full py-2 border-2 bg-button-color text-white text-xl font-semibold"> Register
+          className="w-full rounded-full py-2 border-2 bg-button-color text-xl font-semibold"
+          // style={{ color: "#ffffff", border: "#000000" }}
+        >
+          Register
         </button>
-        {error && <p className="text-red-500 py-2 w-full text-center">{error}</p>}  
-    <p className="py-3 w-full text-center font-semibold text-sm">Already have an account? <a classname="text-blue-500">
-    login </a> here</p>
-    </div>
+        {error && (
+          <p className="text-red-500 py-2 w-full text-center">{error}</p>
+        )}
+        <p className="py-3 w-full text-center font-semibold text-sm">
+          Already have an account?
+          <a href="/login" style={{ color: "#3b82f6" }}>
+            login
+          </a>
+          here
+        </p>
+      </div>
     </div>
   );
 };
