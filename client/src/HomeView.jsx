@@ -1,12 +1,13 @@
-import react from 'react';
-import './index.css';
+import react from "react";
+import "./index.css";
+import Navbar from "./components/Navbar";
 
 const Home = () => {
-
-  return(
-    <div>INI HOME YGY</div>
+  return (
+    <div>
+      <Navbar />
+    </div>
   );
-
-}
+};
 
 export default Home;

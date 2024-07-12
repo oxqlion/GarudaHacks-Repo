@@ -10,6 +10,7 @@ export default {
     colors: {
       "text-box-bg": "#ECECEC",
       "button-color": "#6270A0",
+      "primary": "#6270A0",
     },
   },
   plugins: [],
