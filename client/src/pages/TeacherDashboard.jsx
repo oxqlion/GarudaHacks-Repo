@@ -38,24 +38,30 @@ const TeacherDashboard = () => {
                 <h2 className="text-xl font-semibold">My Courses</h2>
             </div>
             <div className="w-full px-6">
-                <table className="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th className="py-2 px-4 border-b">Course ID</th>
-                            <th className="py-2 px-4 border-b">Course Name</th>
-                            <th className="py-2 px-4 border-b">Course Date & Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {courses.map(course => (
-                            <tr key={course.id}>
-                                <td className="py-2 px-4 border-b">{course.id}</td>
-                                <td className="py-2 px-4 border-b">{course.courseName}</td>
-                                <td className="py-2 px-4 border-b">{course.courseDate} {course.courseTime}</td>
+                {courses.length > 0 ? (
+                    <table className="min-w-full bg-white">
+                        <thead>
+                            <tr>
+                                <th className="py-2 px-4 border-b">Course ID</th>
+                                <th className="py-2 px-4 border-b">Course Name</th>
+                                <th className="py-2 px-4 border-b">Course Date & Time</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {courses.map(course => (
+                                <tr key={course.id}>
+                                    <td className="py-2 px-4 border-b">
+                                        <Link to={`/course/${course.id}`}>{course.id}</Link>
+                                    </td>
+                                    <td className="py-2 px-4 border-b">{course.courseName}</td>
+                                    <td className="py-2 px-4 border-b">{course.courseDate} {course.courseTime}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <p>No courses found.</p>
+                )}
             </div>
         </div>
     );

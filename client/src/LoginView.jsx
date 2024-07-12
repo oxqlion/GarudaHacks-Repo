@@ -38,6 +38,7 @@ const Login = () => {
         }
       } else {
         setError("User role not found");
+        navigate('/')
       }
 
       alert("Logged in successfully!");
