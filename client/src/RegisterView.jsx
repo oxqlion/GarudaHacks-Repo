@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { fb_auth } from "./firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,6 +24,7 @@ const Register = () => {
     try {
       await createUserWithEmailAndPassword(fb_auth, email, password);
       alert("Registered successfully!");
+      navigate('/login')
     } catch (error) {
       setError(error.message);
     }
@@ -78,7 +83,7 @@ const Register = () => {
         <button
           onClick={handleRegister}
           className="w-full rounded-full py-2 border-2 bg-button-color text-xl font-semibold"
-          // style={{ color: "#ffffff", border: "#000000" }}
+        // style={{ color: "#ffffff", border: "#000000" }}
         >
           Register
         </button>
