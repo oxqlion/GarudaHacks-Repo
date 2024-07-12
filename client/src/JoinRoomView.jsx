@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 import Peer from 'peerjs'
 import './index.css';
 
 const JoinRoom = () => {
+  const { callId } = useParams()
 
   const [peerId, setPeerId] = useState(null)
   const [roomId, setRoomId] = useState("")
@@ -18,8 +20,17 @@ const JoinRoom = () => {
     console.log("The generated peer is : ", number)
 
     peer.on('open', id => {
+      console.log("number : ", number)
+      console.log("id parameter : ", id)
       setRoomId(id)
     })
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then(stream => {
+          if (localVideoRef.current) {
+            localVideoRef.current.srcObject = stream
+          }
+        })
 
     peer.on('call', call => {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -64,7 +75,7 @@ const JoinRoom = () => {
   return (
     <div className='flex flex-col p-12'>
       <div className="App">
-        <h1>PeerJS Video Call</h1>
+        {/* <h1>PeerJS Video Call</h1> */}
         <div>
           <h2>Your ID: {peerId}</h2>
           <input
