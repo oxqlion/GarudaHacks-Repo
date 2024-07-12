@@ -7,6 +7,7 @@ import RegisterView from './RegisterView'
 import LoginView from './LoginView'
 import JoinRoomView from './JoinRoomView'
 import VideoCallView from './VideoCallView'
+import TeacherRegister from "./pages/TeacherRegister";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/register" element={<RegisterView />} />
         <Route path="/join" element={<JoinRoomView />} />
         <Route path="/call" element={<VideoCallView />} />
+        <Route path="/register-teacher" element={<TeacherRegister />} />
       </Routes>
     </Router>
   );
