@@ -18,7 +18,7 @@ const AboutView = () => {
               </p>
             </div>
             <div className="w-full mx-auto">
-              <img src={Aboutbg} alt="Description of image" className="w-3/6 h-auto" />
+              <img src={Aboutbg} alt="Description of image" className="w-8/12 h-auto" />
             </div>
           </div>
 
@@ -26,28 +26,28 @@ const AboutView = () => {
         
         <div className="text-center py-8">
           <h2 className="text-3xl font-bold mb-6">Our Story</h2>
-          <h3 className="text-2xl font-semibold mb-2">Our Values</h3>
-          <div className="bg-primary py-6 mb-6 px-4 md:px-8 mx-4 rounded-lg">
-            
+          </div>
+          <h3 className="text-2xl font-semibold lg:ml-4 mb-2">Our Values</h3>
+          <div className="bg-primary lg:mr-80 py-6 mb-6 px-4 md:px-8 mx-4 rounded-lg">
             <p className="text-white">
               Convy is your gateway to a future of inclusive learning. This innovative platform empowers people with disabilities by offering synchronous skill development programs and real-time accessibility features. Convy's video conferencing utilizes sign language detection to convert gestures to text, while speech-to-text ensures everyone can follow along.
             </p>
           </div>
-          <h3 className="text-2xl font-semibold mb-2">Our Mission</h3>
-          <div className="bg-primary py-6 mb-6 px-4 md:px-8 mx-4 rounded-lg">
+          <h3 className="text-2xl font-semibold lg:ml-96 mb-2">Our Mission</h3>
+          <div className="bg-primary lg:ml-96 py-6 mb-6 px-4 md:px-8 mx-4 rounded-lg">
            
             <p className="text-white"> 
               Convy empowers individuals with disabilities to achieve their full potential through inclusive learning. We provide accessible and engaging programs, foster a supportive community, and champion the voices of people with disabilities. Our goal is to create a world where everyone has the opportunity to learn, grow, and succeed.
             </p>
           </div>
-          <h3 className="text-2xl font-semibold mb-2">Our Vision</h3>
-          <div className=" bg-primary pb-2 py-6 mb-6 px-4 md:px-8 mx-4 rounded-lg">
+          <h3 className="text-2xl font-semibold lg:ml-4  mb-2">Our Vision</h3>
+          <div className=" bg-primary pb-2 py-6 lg:mr-80 mb-6 px-4 md:px-8 mx-4 rounded-lg">
            
             <p className="text-white">
               Our vision is a world where learning has no barriers. We see a future where Convy is synonymous with inclusive education, a place where individuals with disabilities can confidently access the knowledge and skills they need to achieve their dreams.
             </p>
           </div>
-        </div>
+        
         
         
       </div>

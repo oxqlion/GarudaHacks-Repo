@@ -7,7 +7,15 @@ import { getStorage } from "firebase/storage"
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-
+const firebaseConfig = {
+  apiKey: "AIzaSyAz79QK8ho_YYncCJYsH9rX1PHIYAIdUW8",
+  authDomain: "garuda-hacks-e088c.firebaseapp.com",
+  projectId: "garuda-hacks-e088c",
+  storageBucket: "garuda-hacks-e088c.appspot.com",
+  messagingSenderId: "554948209594",
+  appId: "1:554948209594:web:8efb85145688aa5cc2cb83",
+  measurementId: "G-XZ27VTYPFK"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
