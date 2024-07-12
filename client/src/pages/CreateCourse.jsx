@@ -14,6 +14,7 @@ const CreateCourse = () => {
     }, [])
 
     const [courseName, setCourseName] = useState('');
+    const [teacherName, setTeacherName] = useState('');
     const [teacherBackground, setTeacherBackground] = useState('');
     const [courseDescription, setCourseDescription] = useState('');
     const [courseDate, setCourseDate] = useState('');
@@ -39,6 +40,7 @@ const CreateCourse = () => {
 
             const courseData = {
                 courseName,
+                teacherName,
                 teacherBackground,
                 courseDescription,
                 courseDate,
@@ -51,6 +53,7 @@ const CreateCourse = () => {
             await addDoc(collection(db, 'courses'), courseData);
 
             setCourseName('');
+            setTeacherName('');
             setTeacherBackground('');
             setCourseDescription('');
             setCourseDate('');
@@ -81,6 +84,15 @@ const CreateCourse = () => {
                         type="text"
                         value={courseName}
                         onChange={(e) => setCourseName(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Teacher Name:</label>
+                    <input
+                        type="text"
+                        value={teacherName}
+                        onChange={(e) => setTeacherName(e.target.value)}
                         required
                     />
                 </div>
