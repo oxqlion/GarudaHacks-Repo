@@ -5,9 +5,11 @@ import { db } from "./firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import "./index.css";
 import axios from "axios";
+import { useState } from "react";
 
 const VideoCallView = () => {
   const { meetingId } = useParams();
+  const [prediction, setPrediction] = useState("loading...");
 
   const number = Math.floor(100000 + Math.random() * 900000);
   const peer = useRef(new Peer(number)).current;
@@ -81,7 +83,7 @@ const VideoCallView = () => {
   };
 
   const captureFrameAndSend = async () => {
-    console.log("Capturing frame...");
+    // console.log("Capturing frame...");
 
     if (!canvasRef.current || !localVideoRef.current) return;
 
@@ -139,10 +141,27 @@ const VideoCallView = () => {
     const frame = grayCanvas.toDataURL("image/jpeg");
 
     // Send the frame to the server
-    const response = await axios.post("http://127.0.0.1:5001/predict", {
+    const predictions = await axios.post("http://127.0.0.1:5001/predict", {
       frame,
     });
-    console.log("Prediction:", response.data);
+    let predictedText = "Unknown";
+
+    // Check each prediction and update the state
+    if (predictions[0] === 1) {
+      predictedText = "hello";
+    } else if (predictions[1] === 1) {
+      predictedText = "thanks";
+    } else if (predictions[2] === 1) {
+      predictedText = "ready";
+    } else if (predictions[3] === 1) {
+      predictedText = "awesome";
+    } else if (predictions[4] === 1) {
+      predictedText = "i";
+    } else if (predictions[5] === 1) {
+      predictedText = "i love you";
+    }
+
+    setPrediction(predictedText);
   };
 
   const sendFrameToServer = async (frame) => {
@@ -176,6 +195,7 @@ const VideoCallView = () => {
           <h2>Local Video</h2>
           <video ref={localVideoRef} autoPlay playsInline muted />
           <canvas ref={canvasRef} style={{ display: "none" }} />
+          <h1>{prediction}</h1>
         </div>
         <div>
           <h2>Remote Video</h2>
