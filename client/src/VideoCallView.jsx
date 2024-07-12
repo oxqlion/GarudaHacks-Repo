@@ -4,6 +4,8 @@ import Peer from 'peerjs';
 import { db } from './firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
 import './index.css';
+import axios from 'axios'
+
 
 const VideoCallView = () => {
 
@@ -15,6 +17,7 @@ const VideoCallView = () => {
 
   const remoteVideoRef = useRef(null)
   const localVideoRef = useRef(null)
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     console.log("The generated peer is : ", meetingId)
@@ -32,6 +35,12 @@ const VideoCallView = () => {
           localVideoRef.current.srcObject = stream
         }
       })
+
+    
+
+    setInterval(() => {
+      captureFrameAndSend();
+    }, 1000 / 30);
 
     peer.on('call', call => {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -72,6 +81,38 @@ const VideoCallView = () => {
       })
   }
 
+  const captureFrameAndSend = async () => {
+
+    console.log("Masuk interval bang")
+
+    if (!canvasRef.current || !localVideoRef.current) return;
+
+    const canvas = canvasRef.current;
+    const video = localVideoRef.current;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+    const frame = canvas.toDataURL('image/jpeg');
+    console.log(frame)
+    const response = await axios.post('http://127.0.0.1:5000/predict', { frame });
+    console.log('Prediction:', response.data);
+
+    // await sendFrameToServer(frame);
+  };
+
+  const sendFrameToServer = async (frame) => {
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/predict', { frame });
+      console.log('Prediction:', response.data);
+      // Handle prediction response as needed (update UI, etc.)
+    } catch (err) {
+      console.error("Error sending frame to server: ", err);
+    }
+  };
+
   return (
     <div className='flex flex-col p-12'>
       <div className="App">
@@ -90,6 +131,7 @@ const VideoCallView = () => {
         <div>
           <h2>Local Video</h2>
           <video ref={localVideoRef} autoPlay playsInline muted />
+          <canvas ref={canvasRef} style={{ display: 'none' }} />
         </div>
         <div>
           <h2>Remote Video</h2>
