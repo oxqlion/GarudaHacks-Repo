@@ -14,23 +14,27 @@ model = load_model('action.h5')
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-    frame_data = data['frame'].split(',')[1]
-    frame_bytes = base64.b64decode(frame_data)
-    nparr = np.frombuffer(frame_bytes, np.uint8)
-    frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    
+    frame_data = data['frame'].split(',')[1]  # Remove data URL prefix
+    frame_bytes = base64.b64decode(frame_data)  # Decode base64 to bytes
+    frame_np = np.frombuffer(frame_bytes, dtype=np.uint8)  # Convert bytes to numpy array
+    frame = cv2.imdecode(frame_np, cv2.IMREAD_GRAYSCALE)  # Decode image to grayscale
+
     # Resize frame to match expected input shape of (30, 1662)
     resized_frame = cv2.resize(frame, (1662, 30))
-    
-    # Expand dimensions to match model input shape (None, 30, 1662)
-    input_data = np.expand_dims(resized_frame, axis=0)
-    
+
+    # Ensure that the resized_frame has the shape (30, 1662)
+    if resized_frame.shape != (30, 1662):
+        raise ValueError(f"Resized frame has an incorrect shape: {resized_frame.shape}")
+
+    # Reshape to (1, 30, 1662) to match LSTM input shape
+    input_data = np.reshape(resized_frame, (1, 30, 1662))
+
     # Get prediction
     prediction = model.predict(input_data)
-    
+
     # Post-process the prediction if necessary
     result = prediction.tolist()  # Convert numpy array to list
-
+    print(result)
     return jsonify(result)
 
 if __name__ == '__main__':
