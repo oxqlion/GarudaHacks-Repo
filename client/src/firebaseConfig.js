@@ -8,11 +8,11 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "",
-  authDomain: "convy-a06d9.firebaseapp.com",
-  projectId: "convy-a06d9",
-  storageBucket: "convy-a06d9.appspot.com",
-  messagingSenderId: "177776972521",
-  appId: "1:177776972521:web:0748e08d36629122751678"
+  authDomain: "",
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
 };
 
 // Initialize Firebase

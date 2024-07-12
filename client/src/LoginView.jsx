@@ -1,8 +1,16 @@
 import React, { useState } from "react";
-import { fb_auth } from "./firebaseConfig";
+import { fb_auth, db } from "./firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc, query, where, getDocs, collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
+import { useUser } from "./UserContext";
+
 const Login = () => {
+
+  const navigate = useNavigate()
+  const { setUser } = useUser()
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -12,10 +20,29 @@ const Login = () => {
     setError("");
 
     try {
-      await signInWithEmailAndPassword(fb_auth, email, password);
+      const userCred = await signInWithEmailAndPassword(fb_auth, email, password);
+      const user = userCred.user
+
+      const q = query(collection(db, "teachers"), where("email", "==", user.email));
+      const querySnapshot = await getDocs(q);
+      console.log(querySnapshot)
+
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        setUser(userData)
+        if (userData.role === "Teacher") {
+          navigate("/dashboard-teacher");
+        } else {
+          // Redirect to another route if needed
+          navigate("/");
+        }
+      } else {
+        setError("User role not found");
+      }
+
       alert("Logged in successfully!");
     } catch (error) {
-      setError(error.message);
+      setError("Error : " + error.message);
     }
   };
 
