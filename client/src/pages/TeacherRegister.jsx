@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-import { db } from '../firebaseConfig';
+import { db, fb_auth } from '../firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const TeacherRegister = () => {
+
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
-        company: ''
+        company: '',
+        password: '',
+        confirmPassword: '',
+        role: 'Teacher'
     });
+
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,16 +30,30 @@ const TeacherRegister = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { email, password, confirmPassword, ...otherData } = formData;
+
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return;
+        }
+
         try {
-            await addDoc(collection(db, 'teachers'), formData);
+            const userCredential = await createUserWithEmailAndPassword(fb_auth, email, password);
+            await addDoc(collection(db, 'teachers'), {
+                ...otherData,
+                email
+            });
             console.log('Form Data Submitted:', formData);
             alert('Registration successful');
             setFormData({
                 name: '',
                 email: '',
                 phone: '',
-                company: ''
+                company: '',
+                password: '',
+                confirmPassword: ''
             });
+            navigate('/login')
         } catch (error) {
             console.error('Error adding document: ', error);
             alert('Error adding document');
@@ -39,6 +63,7 @@ const TeacherRegister = () => {
     return (
         <div>
             <h2>Teacher Registration</h2>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Name:</label>
@@ -56,6 +81,26 @@ const TeacherRegister = () => {
                         type="email"
                         name="email"
                         value={formData.email}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Confirm Password:</label>
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
                         onChange={handleChange}
                         required
                     />
