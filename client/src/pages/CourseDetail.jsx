@@ -24,6 +24,11 @@ const CourseDetail = () => {
     const localVideoRef = useRef(null);
 
     useEffect(() => {
+
+        if (!user) {
+            navigate('/login')
+        } 
+
         console.log("Course ID: ", courseId);
 
         const fetchCourse = async () => {
@@ -46,6 +51,10 @@ const CourseDetail = () => {
     }, [courseId]);
 
     useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        } 
+            
         if (user.email !== course?.createdBy && course) {
             const checkCallExists = async () => {
                 try {
@@ -61,7 +70,7 @@ const CourseDetail = () => {
 
             checkCallExists();
         }
-    }, [user.email, course, courseId]);
+    }, [course, courseId, user]);
 
     if (loading) {
         return <div>Loading...</div>;
