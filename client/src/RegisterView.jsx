@@ -4,8 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +23,7 @@ const Register = () => {
     try {
       await createUserWithEmailAndPassword(fb_auth, email, password);
       alert("Registered successfully!");
-      navigate('/login')
+      navigate("/login");
     } catch (error) {
       setError(error.message);
     }
@@ -45,7 +44,7 @@ const Register = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
+            className="w-full font-regular rounded-xl border border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
@@ -57,7 +56,7 @@ const Register = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
+            className="w-full font-regular rounded-xl border border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
@@ -69,7 +68,7 @@ const Register = () => {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
+            className="w-full font-regular rounded-xl border border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
@@ -82,8 +81,8 @@ const Register = () => {
         </div>
         <button
           onClick={handleRegister}
-          className="w-full rounded-full py-2 border-2 bg-button-color text-xl font-semibold"
-        // style={{ color: "#ffffff", border: "#000000" }}
+          className="w-full rounded-full py-2 border bg-button-color text-xl font-semibold"
+          // style={{ color: "#ffffff", border: "#000000" }}
         >
           Register
         </button>
