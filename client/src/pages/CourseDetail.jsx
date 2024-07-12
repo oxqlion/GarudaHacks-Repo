@@ -1,24 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebaseConfig';
-import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs, collection, query, where } from 'firebase/firestore';
 import { useUser } from '../UserContext';
 import Peer from 'peerjs';
 
 const CourseDetail = () => {
     const { courseId } = useParams();
     const { user } = useUser(); // Get the logged-in user from the context
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [peerId, setPeerId] = useState()
-    const remoteVideoRef = useRef(null)
-    const localVideoRef = useRef(null)
+    const [callExists, setCallExists] = useState(false);
+    const [peerId, setPeerId] = useState(null);
+    const remoteVideoRef = useRef(null);
+    const localVideoRef = useRef(null);
 
     useEffect(() => {
-        console.log("Course ID : ", courseId);
+        console.log("Course ID: ", courseId);
 
         const fetchCourse = async () => {
             try {
@@ -39,6 +40,24 @@ const CourseDetail = () => {
         fetchCourse();
     }, [courseId]);
 
+    useEffect(() => {
+        if (user.email !== course?.createdBy && course) {
+            const checkCallExists = async () => {
+                try {
+                    const q = query(collection(db, 'calls'), where('id', '==', courseId));
+                    const querySnapshot = await getDocs(q);
+                    if (!querySnapshot.empty) {
+                        setCallExists(true);
+                    }
+                } catch (error) {
+                    console.error("Error checking call existence: ", error);
+                }
+            };
+
+            checkCallExists();
+        }
+    }, [user.email, course, courseId]);
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -57,10 +76,10 @@ const CourseDetail = () => {
     const startCall = async () => {
         const callPeerId = Math.floor(100000 + Math.random() * 900000);
 
-        setPeerId(callPeerId)
-        await addDoc(collection(db, 'calls'), { courseId, callPeerId });
+        setPeerId(callPeerId);
+        // await addDoc(collection(db, 'calls'), { courseId, callPeerId });
 
-        navigate(`/meeting/${callPeerId}`)
+        navigate(`/meeting/${courseId}`);
 
         // const peer = useRef(new Peer(callPeerId)).current
 
@@ -87,23 +106,27 @@ const CourseDetail = () => {
         //         })
         // })
 
-    }
+    };
 
     const renderButton = () => {
         if (user.email === course.createdBy) {
             console.log("User is the creator of the course");
             if (currentDateTime >= courseDateTime) {
                 console.log("Current date/time has passed the course date/time");
-                return <button onClick={startCall}> Start Course</button >;
+                return <button onClick={startCall}>Start Course</button>;
             } else {
-                console.log("Current date/time has passed the course date/time");
-                return <button disabled={true}>Course wilt start at {course.courseDate}</button>;
+                console.log("Current date/time has not yet reached the course date/time");
+                return <button disabled={true}>Course will start at {course.courseDate}</button>;
             }
         } else {
             console.log("User is not the creator of the course");
             if (currentDateTime >= courseDateTime) {
                 console.log("Current date/time has passed the course date/time");
-                return <button>Join Course</button>;
+                if (callExists) {
+                    return <button onClick={() => navigate(`/meeting/${courseId}`)}>Join Course</button>;
+                } else {
+                    return <button disabled={true}>Course hasn't started yet</button>;
+                }
             } else {
                 console.log("Current date/time has not yet reached the course date/time");
                 return <button>Save Course</button>;

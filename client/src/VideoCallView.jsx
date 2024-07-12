@@ -1,13 +1,17 @@
-import react, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
+import { db } from './firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 import './index.css';
 
 const VideoCallView = () => {
 
   const { meetingId } = useParams()
 
-  const peer = useRef(new Peer(meetingId)).current
+  const number = Math.floor(100000 + Math.random() * 900000);
+  const peer = useRef(new Peer(number)).current
+  // const peer = useRef(new Peer(number)).current
 
   const remoteVideoRef = useRef(null)
   const localVideoRef = useRef(null)
@@ -15,11 +19,19 @@ const VideoCallView = () => {
   useEffect(() => {
     console.log("The generated peer is : ", meetingId)
 
-    peer.on('open', id => {
+    peer.on('open', async id => {
       console.log("meetingId : ", meetingId)
       console.log("id parameter : ", id)
-      setRoomId(id)
+      await addDoc(collection(db, 'calls'), { meetingId, id });
+      // setRoomId(id)
     })
+
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = stream
+        }
+      })
 
     peer.on('call', call => {
       navigator.mediaDevices.getUserMedia({ video: true, audio: true })
@@ -39,8 +51,26 @@ const VideoCallView = () => {
           console.log("Something went wrong on Join Room Use Effect : ", err)
         })
     })
-
   }, [peer])
+
+  const makeCall = () => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+      .then(stream => {
+        if (localVideoRef.current) {
+          localVideoRef.current.srcObject = stream
+        }
+        const call = peer.call(meetingId, stream)
+
+        call.on('stream', remoteStream => {
+          if (remoteVideoRef.current) {
+            remoteVideoRef.current.srcObject = remoteStream
+          }
+        })
+      })
+      .catch(err => {
+        console.log("Something wrong on Make Call : ", err)
+      })
+  }
 
   return (
     <div className='flex flex-col p-12'>
@@ -55,6 +85,7 @@ const VideoCallView = () => {
             placeholder="Enter peer ID to call"
           />
           <button>Call</button> */}
+          <button onClick={makeCall}>Call</button>
         </div>
         <div>
           <h2>Local Video</h2>
