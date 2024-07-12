@@ -9,6 +9,7 @@ import JoinRoomView from './JoinRoomView'
 import VideoCallView from './VideoCallView'
 import TeacherRegister from "./pages/TeacherRegister";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import DetailCourse from "./DetailCourseView";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/call" element={<VideoCallView />} />
         <Route path="/register-teacher" element={<TeacherRegister />} />
         <Route path="/dashboard-teacher" element={<TeacherDashboard />} />
+        <Route path="/detail-course" element={<DetailCourse />} />
       </Routes>
     </Router>
   );
