@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/" element={<HomeView />} />
         <Route path="/login" element={<LoginView />} />
         <Route path="/register" element={<RegisterView />} />
-        <Route path="/join" element={<JoinRoomView />} />
+        <Route path="/join/:callId" element={<JoinRoomView />} />
         <Route path="/call" element={<VideoCallView />} />
         <Route path="/register-teacher" element={<TeacherRegister />} />
         <Route path="/dashboard-teacher" element={<TeacherDashboard />} />
@@ -31,6 +31,8 @@ const App = () => {
         <Route path="/create-course" element={<CreateCourse />} />
         <Route path="/course/:courseId" element={<CourseDetail />} />
         <Route path="/about" element={<AboutView />} />
+        <Route path="/meeting/:meetingId" element={<VideoCallView />} />
+
       </Routes>
     </Router>
   );
