@@ -1,67 +1,89 @@
-import React, { useState } from 'react';
-import { fb_auth } from './firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from "react";
+import { fb_auth } from "./firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     try {
       await createUserWithEmailAndPassword(fb_auth, email, password);
-      alert('Registered successfully!');
+      alert("Registered successfully!");
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Email:</label>
+    <div className="flex w-screen h-screen items-center justify-center">
+      <div>
+        <h2 className="font-bold text-2xl w-full text-center font-inter ">
+          Register
+        </h2>
+        <div className="w-full py-2">
+          <p className="font-md text-sm w-full text-left font-inter mb-2">
+            Email
+          </p>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="w-full py-2">
+          <p className="font-md text-sm w-full text-left font-inter mb-2">
+            Password
+          </p>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
-        <div>
-          <label>Confirm Password:</label>
+        <div className="w-full py-2">
+          <p className="font-md text-sm w-full text-left font-inter mb-2">
+            Confirm Password
+          </p>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full font-regular rounded-xl border-2 border-black bg-text-box-bg text-lg py-3 px-2"
             required
           />
         </div>
-        <button type="submit">Register</button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
+
+          <div className="flex flex-row mb-2">
+            <input type="checkbox" id="agree" name="agree" />
+            <p className="text-sm font-inter px-2">
+              I agree to the terms & services
+            </p>
+          </div>
+        <button
+          onClick={handleRegister}
+          className="w-full rounded-full py-2 border-2 bg-button-color text-white text-xl font-semibold"> Register
+        </button>
+        {error && <p className="text-red-500 py-2 w-full text-center">{error}</p>}  
+    <p className="py-3 w-full text-center font-semibold text-sm">Already have an account? <a classname="text-blue-500">
+    login </a> here</p>
+    </div>
     </div>
   );
 };
 
 export default Register;
-

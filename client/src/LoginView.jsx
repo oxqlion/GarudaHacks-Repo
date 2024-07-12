@@ -52,7 +52,7 @@ const Login = () => {
         <h2 className="font-bold text-2xl w-full text-center font-inter ">
           Login
         </h2>
-        <div className="w-full px-12 py-2">
+        <div className="w-full py-2">
           <p className="font-md text-sm w-full text-left font-inter mb-2">
             Email
           </p>
@@ -64,7 +64,7 @@ const Login = () => {
             required
           />
         </div>
-        <div className="w-full px-12 py-2">
+        <div className="w-full py-2">
           <p className="font-md text-sm w-full text-left font-inter mb-2">
             Password
           </p>
@@ -76,7 +76,7 @@ const Login = () => {
             required
           />
         </div>
-        <div className="w-full px-12 py-1">
+        <div className="w-full py-2">
           <div className="flex flex-row mb-2">
             <input type="checkbox" id="agree" name="agree" />
             <p className="text-sm font-inter px-2">
@@ -85,12 +85,18 @@ const Login = () => {
           </div>
           <button
             onClick={handleLogin}
-            className="w-full rounded-full py-2 border-2 bg-button-color text-white text-xl font-semibold"> Login
+            className="w-full rounded-full py-2 border-2 bg-button-color text-white text-xl font-semibold"
+          >
+            Login
           </button>
 
-          {error && <p className="text-red-500 py-2 w-full text-center">{error}</p>}
-          <p className="py-2 w-full text-center font-semibold text-sm">Don't have an account? <a className="text-blue-500">
-            Register </a> Here</p>
+          {error && (
+            <p className="text-red-500 py-2 w-full text-center">{error}</p>
+          )}
+          <p className="py-3 w-full text-center font-semibold text-sm">
+            don't have an account? <a classname="text-blue-500">register </a>{" "}
+            here
+          </p>
         </div>
       </div>
     </div>
