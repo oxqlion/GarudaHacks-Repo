@@ -6,11 +6,12 @@ export default {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
       },
-    },
-    colors: {
-      "text-box-bg": "#ECECEC",
-      "button-color": "#6270A0",
-      "primary": "#6270A0",
+      colors: {
+        "text-box-bg": "#ECECEC",
+        "button-color": "#6270A0",
+        primary: "#6270A0",
+        white: "#f5f5f5",
+      },
     },
   },
   plugins: [],

@@ -8,7 +8,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed w-full bg-white border-b-1 border-primary z-50">
+    <div className="fixed w-full bg-slate-50 border-b-1 border-primary z-50">
       <div className="w-full flex flex-row justify-between items-center px-6 py-4">
         <h2 className="text-3xl font-bold text-primary font-inter">Convy</h2>
         <button
@@ -30,7 +30,7 @@ const Navbar = () => {
             ></path>
           </svg>
         </button>
-        <ul className="hidden md:flex md:flex-row md:items-center md:space-x-6 text-primary font-inter">
+        <ul className="hidden md:flex md:flex-row md:items-center md:space-x-6 text-primary font-inter font-semibold">
           <li className="hover:text-blue-500 cursor-pointer">Home</li>
           <li className="hover:text-blue-500 cursor-pointer">Class</li>
           <li className="hover:text-blue-500 cursor-pointer">Contacts</li>
@@ -40,7 +40,7 @@ const Navbar = () => {
       <ul
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } md:hidden flex flex-col items-left space-y-6 pb-4 text-primary transition-all duration-300 ease-in-out transform px-8 font-semibold ${
+        } md:hidden flex flex-col items-left space-y-6 pb-4 text-primary duration-300 ease-in-out font-inter transform px-8 font-semibold ${
           isMenuOpen ? "translate-y-0" : "-translate-y-full"
         }`}
       >
