@@ -8,16 +8,16 @@ const Navbar = () => {
   };
 
   return (
-    <div className="fixed w-full bg-slate-50 border-b-1 border-primary z-50">
+    <div className="fixed w-full bg-slate-50 border-b border-black z-50">
       <div className="w-full flex flex-row justify-between items-center px-6 py-4">
         <h2 className="text-3xl font-bold text-primary font-inter">Convy</h2>
         <button
-          className="md:hidden block focus:outline-none bg-primary p-4 rounded-lg"
+          className="md:hidden block border border-black focus:outline-none bg-primary p-4 rounded-lg"
           onClick={toggleMenu}
         >
           <svg
             className="w-6 h-6"
-            fill="none"
+            fill="white"
             stroke="white"
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"

@@ -9,8 +9,9 @@ export default {
       colors: {
         "text-box-bg": "#ECECEC",
         "button-color": "#6270A0",
-        primary: "#6270A0",
-        white: "#f5f5f5",
+        "primary": "#6270A0",
+        "white": "#f5f5f5",
+        "secondary": "#9DDADB",
       },
     },
   },
