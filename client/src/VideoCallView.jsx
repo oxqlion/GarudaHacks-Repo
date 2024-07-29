@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import Peer from "peerjs";
-import { db } from "./firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
-import "./index.css";
-import axios from "axios";
-import { useState } from "react";
+
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Peer from 'peerjs';
+import { db } from './firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
+import './index.css';
+import axios from 'axios'
 
 const VideoCallView = () => {
   const { meetingId } = useParams();
@@ -18,6 +18,8 @@ const VideoCallView = () => {
   const remoteVideoRef = useRef(null);
   const localVideoRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const [caption, setCaption] = useState('')
 
   useEffect(() => {
     console.log("The generated peer is : ", meetingId);
@@ -35,7 +37,8 @@ const VideoCallView = () => {
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
         }
-      });
+      })
+
 
     setInterval(() => {
       captureFrameAndSend();
@@ -193,9 +196,9 @@ const VideoCallView = () => {
         </div>
         <div>
           <h2>Local Video</h2>
-          <video ref={localVideoRef} autoPlay playsInline muted />
-          <canvas ref={canvasRef} style={{ display: "none" }} />
-          <h1>{prediction}</h1>
+          <video ref={localVideoRef} autoPlay playsInline muted style={{ width: '640px', height: '480px' }} />
+          <canvas ref={canvasRef} style={{ display: 'none', width: '640px', height: '480px' }} />
+          <h1>{caption}</h1>
         </div>
         <div>
           <h2>Remote Video</h2>
